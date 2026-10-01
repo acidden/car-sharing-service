@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: car_sharing_mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=Acid-33134
+      - MYSQL_DATABASE=car_sharing_db
+      - MYSQL_USER=car_sharing_admin
+      - MYSQL_PASSWORD=secure_password
+    ports:
+      - "3307:3306"
