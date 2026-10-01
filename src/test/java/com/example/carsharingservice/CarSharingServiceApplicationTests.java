@@ -1,4 +1,4 @@
-package com.example.car_sharing_service;
+package com.example.carsharingservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
