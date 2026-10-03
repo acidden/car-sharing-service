@@ -11,14 +11,14 @@ import jakarta.validation.constraints.Size;
         message = "incorrect password"
 )
 public record UserRegistrationRequestDto(
-        @NotBlank(message = "Email cannot be blank")
+        @NotBlank
         @Email
         String email,
 
-        @NotBlank(message = "First name cannot be blank")
+        @NotBlank
         String firstName,
 
-        @NotBlank(message = "Last name cannot be blank")
+        @NotBlank
         String lastName,
 
         @NotBlank
