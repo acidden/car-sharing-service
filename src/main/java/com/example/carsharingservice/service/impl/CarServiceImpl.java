@@ -54,6 +54,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         if (!carRepository.existsById(id)) {
             throw new EntityNotFoundException("Can`t delete car. Car not found with ID:" + id);
