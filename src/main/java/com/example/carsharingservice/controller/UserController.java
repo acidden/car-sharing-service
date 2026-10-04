@@ -6,7 +6,9 @@ import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,14 +28,17 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public UserResponseDto getMyProfile() {
-        String mockEmail = "test@example.com";
-        return userService.getProfile(mockEmail);
+    public UserResponseDto getMyProfile(Authentication authentication) {
+        String email = authentication.getName();
+        return userService.getProfile(email);
     }
 
-    @PutMapping("/me")
-    public UserResponseDto updateMyProfile(@RequestBody @Valid UserUpdateRequestDto requestDto) {
-        String mockEmail = "test@example.com";
-        return userService.updateProfile(mockEmail, requestDto);
+    @PatchMapping("/me")
+    public UserResponseDto updateMyProfile(
+            Authentication authentication,
+            @RequestBody @Valid UserUpdateRequestDto requestDto
+    ) {
+        String email = authentication.getName();
+        return userService.updateProfile(email, requestDto);
     }
 }
