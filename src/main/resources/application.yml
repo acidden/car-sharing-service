@@ -22,3 +22,7 @@ spring:
     endpoint:
       health:
         show-details: always
+
+jwt:
+  secret: "VeryLongAndSecureKeyWithAtLeast32Characters"
+  expiration: 86400000

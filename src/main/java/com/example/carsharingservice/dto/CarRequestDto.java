@@ -8,16 +8,16 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 public record CarRequestDto(
-        @NotBlank(message = "Model cannot be blank")
+        @NotBlank
         String model,
-        @NotBlank(message = "Brand cannot be blank")
+        @NotBlank
         String brand,
-        @NotNull(message = "Car type cannot be null")
+        @NotNull
         Car.CarType type,
-        @PositiveOrZero(message = "Inventory must be zero or positive number")
+        @PositiveOrZero
         int inventory,
-        @NotNull(message = "Daily fee cannot be null")
-        @Positive(message = "Daily fee must be a positive")
+        @NotNull
+        @Positive
         BigDecimal dailyFee
 ) {
 }
