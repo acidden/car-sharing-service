@@ -31,7 +31,14 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/register", "/login").permitAll()
+                        .requestMatchers(
+                                "/auth/register",
+                                "/auth/login",
+                                "/error/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        )
+                        .permitAll()
                         .requestMatchers(HttpMethod.PUT,"/users/{id}/role").hasRole("MANAGER")
                         .requestMatchers("/users/me").authenticated()
                         .requestMatchers(org.springframework.http.HttpMethod.GET,
