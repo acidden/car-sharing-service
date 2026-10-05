@@ -48,6 +48,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RentalException.class)
+    public ResponseEntity<Object> handleRentalException(RentalException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("error", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
     private String getErrorMessage(ObjectError objectError) {
         if (objectError instanceof FieldError fieldError) {
             String field = fieldError.getField();

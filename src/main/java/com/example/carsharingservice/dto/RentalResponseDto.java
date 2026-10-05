@@ -7,7 +7,7 @@ public record RentalResponseDto(
         LocalDate rentalDate,
         LocalDate returnDate,
         LocalDate actualReturnDate,
-        Long carId,
+        CarResponseDto car,
         Long userId
 ) {
 }

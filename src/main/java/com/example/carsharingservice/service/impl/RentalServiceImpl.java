@@ -3,6 +3,7 @@ package com.example.carsharingservice.service.impl;
 import com.example.carsharingservice.dto.RentalRequestDto;
 import com.example.carsharingservice.dto.RentalResponseDto;
 import com.example.carsharingservice.exception.EntityNotFoundException;
+import com.example.carsharingservice.exception.RentalException;
 import com.example.carsharingservice.mapper.RentalMapper;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
@@ -38,7 +39,6 @@ public class RentalServiceImpl implements RentalService {
                 () -> new EntityNotFoundException("Can't find user by email: " + userEmail)
         );
         car.setInventory(car.getInventory() - 1);
-        carRepository.save(car);
         Rental rental = rentalMapper.toModel(requestDto);
         rental.setUser(user);
         rental.setCar(car);
@@ -84,17 +84,16 @@ public class RentalServiceImpl implements RentalService {
         User currentUser = userRepository.findByEmail(userEmail).orElseThrow(
                 () -> new EntityNotFoundException("Can't find user by email: " + userEmail)
         );
-        if (currentUser.getRole() == User.UserRole.MANAGER
+        if (currentUser.getRole() == User.UserRole.CUSTOMER
                 && !rental.getUser().getId().equals(currentUser.getId())) {
             throw new AccessDeniedException("You don't have permission to return this car.");
         }
         if (rental.getActualReturnDate() != null) {
-            throw new RuntimeException("Car has already been returned for this rental.");
+            throw new RentalException("Car has already been returned for this rental.");
         }
         rental.setActualReturnDate(LocalDate.now());
         Car car = rental.getCar();
         car.setInventory(car.getInventory() + 1);
-        carRepository.save(car);
         Rental updatedRental = rentalRepository.save(rental);
         return rentalMapper.toDto(updatedRental);
     }

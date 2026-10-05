@@ -7,7 +7,7 @@ import com.example.carsharingservice.model.Rental;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = CarMapper.class)
 public interface RentalMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
@@ -16,7 +16,6 @@ public interface RentalMapper {
     @Mapping(target = "rentalDate", expression = "java(java.time.LocalDate.now())")
     Rental toModel(RentalRequestDto requestDto);
 
-    @Mapping(target = "carId", source = "car.id")
     @Mapping(target = "userId", source = "user.id")
     RentalResponseDto toDto(Rental rental);
 }
