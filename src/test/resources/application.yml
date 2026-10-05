@@ -19,3 +19,10 @@ spring:
 jwt:
   secret: "VeryLongAndSecureKeyWithAtLeast32CharactersForJwtSecurityTestingPurposesOnly!"
   expiration: 86400000
+
+telegram:
+  bot:
+    token: "mock_test_token_123456"
+  chat:
+    id: "-1000000000000"
+
