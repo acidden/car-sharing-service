@@ -1,6 +1,7 @@
 package com.example.carsharingservice.repository;
 
 import com.example.carsharingservice.model.Rental;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,10 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
             @Param("isActive") Boolean isActive
     );
 
-    List<Rental> findAllByUserId(Long userId);
+    @Query("SELECT r FROM Rental r "
+            + "JOIN FETCH r.user "
+            + "JOIN FETCH r.car "
+            + "WHERE r.actualReturnDate IS NULL AND "
+            + "r.returnDate <= :currentDate")
+    List<Rental> findAllOverdueRentals(@Param("currentDate") LocalDate currentDate);
 }

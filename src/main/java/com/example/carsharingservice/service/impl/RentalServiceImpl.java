@@ -47,10 +47,10 @@ public class RentalServiceImpl implements RentalService {
 
         Rental savedRental = rentalRepository.save(rental);
         String message = String.format(
-                "🚗 *New Rental Created!*%n"
-                        + "👤 *User:* %s%n"
-                        + "🚘 *Car:* %s %s%n"
-                        + "📅 *Expected Return Date:* %s",
+                "🚗  New Rental Created! %n"
+                        + "👤  User:  %s%n"
+                        + "🚘  Car:  %s %s%n"
+                        + "📅  Expected Return Date:  %s",
                 user.getEmail(), car.getBrand(), car.getModel(), rental.getReturnDate()
         );
         notificationService.sendNotification(message);
