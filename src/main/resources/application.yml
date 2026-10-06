@@ -33,3 +33,6 @@ telegram:
   chat:
     id: ${TELEGRAM_CHAT_ID:mock_id_for_tests}
 
+stripe:
+  public-key: ${STRIPE_PUBLISHABLE_KEY}
+  secret-key: ${STRIPE_SECRET_KEY:mock_key}
