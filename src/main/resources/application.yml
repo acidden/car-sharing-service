@@ -5,7 +5,6 @@ spring:
     password: ${MYSQL_PASSWORD:secure_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
   jpa:
     hibernate:
       ddl-auto: validate
@@ -36,3 +35,7 @@ telegram:
 stripe:
   public-key: ${STRIPE_PUBLISHABLE_KEY}
   secret-key: ${STRIPE_SECRET_KEY:mock_key}
+
+carsharing:
+  fine:
+    multiplier: 2.0

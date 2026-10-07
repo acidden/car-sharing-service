@@ -9,5 +9,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     Optional<Payment> findBySessionId(String stripeSessionId);
 
-    List<Payment> findByRentalId(Long userId);
+    List<Payment> findByRentalUserId(Long userId);
+
+    boolean existsByRentalUserIdAndStatus(Long userId, Payment.PaymentStatus status);
+
+    List<Payment> findAllByStatus(Payment.PaymentStatus status);
 }

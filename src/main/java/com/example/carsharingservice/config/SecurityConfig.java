@@ -36,10 +36,12 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/error/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/payments/success",
+                                "/payments/cancel"
                         )
                         .permitAll()
-                        .requestMatchers(HttpMethod.PUT,"/users/{id}/role").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/users/{id}/role").hasRole("MANAGER")
                         .requestMatchers("/users/me").authenticated()
                         .requestMatchers(org.springframework.http.HttpMethod.GET,
                                 "/cars", "/cars/**").permitAll()
