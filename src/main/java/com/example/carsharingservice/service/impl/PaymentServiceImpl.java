@@ -112,7 +112,7 @@ public class PaymentServiceImpl implements PaymentService {
                 () -> new EntityNotFoundException("Can't find payment by id: " + paymentId));
 
         if (payment.getStatus() != Payment.PaymentStatus.EXPIRED) {
-            throw new IllegalStateException("Only EXPIRED payments can be renewed."
+            throw new PaymentException("Only EXPIRED payments can be renewed."
                     + " Current status: " + payment.getStatus());
         }
 

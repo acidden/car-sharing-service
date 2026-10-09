@@ -23,6 +23,6 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
             + "JOIN FETCH r.user "
             + "JOIN FETCH r.car "
             + "WHERE r.actualReturnDate IS NULL AND "
-            + "r.returnDate <= :currentDate")
+            + "r.returnDate < :currentDate")
     List<Rental> findAllOverdueRentals(@Param("currentDate") LocalDate currentDate);
 }

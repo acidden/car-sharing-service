@@ -13,6 +13,13 @@ public interface PaymentMapper {
     @Mapping(source = "rental.id", target = "rentalId")
     PaymentResponseDto toDto(Payment payment);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "type", ignore = true)
+    @Mapping(target = "sessionUrl", ignore = true)
+    @Mapping(target = "sessionId", ignore = true)
+    @Mapping(target = "amountToPay", ignore = true)
+    @Mapping(target = "rental", ignore = true)
     Payment toModel(PaymentRequestDto requestDto);
 }
 
