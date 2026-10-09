@@ -49,7 +49,7 @@ public class Payment {
     private Rental rental;
 
     public enum PaymentStatus {
-        PENDING, PAID
+        PENDING, PAID, EXPIRED
     }
 
     public enum PaymentType {

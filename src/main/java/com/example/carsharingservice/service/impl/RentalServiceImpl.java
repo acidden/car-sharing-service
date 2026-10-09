@@ -6,9 +6,11 @@ import com.example.carsharingservice.exception.EntityNotFoundException;
 import com.example.carsharingservice.exception.RentalException;
 import com.example.carsharingservice.mapper.RentalMapper;
 import com.example.carsharingservice.model.Car;
+import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.CarRepository;
+import com.example.carsharingservice.repository.PaymentRepository;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.repository.UserRepository;
 import com.example.carsharingservice.service.NotificationService;
@@ -28,18 +30,25 @@ public class RentalServiceImpl implements RentalService {
     private final CarRepository carRepository;
     private final RentalMapper rentalMapper;
     private final NotificationService notificationService;
+    private final PaymentRepository paymentRepository;
 
     @Override
     @Transactional
     public RentalResponseDto save(RentalRequestDto requestDto, String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(
+                () -> new EntityNotFoundException("Can't find user by email: " + userEmail)
+        );
+        boolean hasPendingPayments = paymentRepository.existsByRentalUserIdAndStatus(
+                user.getId(), Payment.PaymentStatus.PENDING
+        );
+        if (hasPendingPayments) {
+            throw new RentalException("You cannot rent a new car. You have pending payments!");
+        }
         Car car = carRepository.findById(requestDto.carId()).orElseThrow(
                 () -> new EntityNotFoundException("Can`t find car by ID: " + requestDto.carId()));
         if (car.getInventory() <= 0) {
             throw new RuntimeException("Car is not available for rental. Inventory is 0.");
         }
-        User user = userRepository.findByEmail(userEmail).orElseThrow(
-                () -> new EntityNotFoundException("Can't find user by email: " + userEmail)
-        );
         car.setInventory(car.getInventory() - 1);
         Rental rental = rentalMapper.toModel(requestDto);
         rental.setUser(user);
@@ -104,6 +113,13 @@ public class RentalServiceImpl implements RentalService {
         rental.setActualReturnDate(LocalDate.now());
         Car car = rental.getCar();
         car.setInventory(car.getInventory() + 1);
+        String message = String.format(
+                "🏁 *Car Returned!*\n"
+                        + "• Rental ID: %d\n"
+                        + "• Actual Return Date: %s",
+                rental.getId(), rental.getActualReturnDate());
+        notificationService.sendNotification(message);
+
         Rental updatedRental = rentalRepository.save(rental);
         return rentalMapper.toDto(updatedRental);
     }

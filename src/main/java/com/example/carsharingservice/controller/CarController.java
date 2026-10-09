@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,8 @@ public class CarController {
     @GetMapping
     @Operation(summary = "Get all cars",
             description = "Retrieve a paginated list of all cars")
-    public List<CarResponseDto> getAllCars(@PageableDefault(size = 10, page = 0)Pageable pageable) {
+    public List<CarResponseDto> getAllCars(
+            @ParameterObject @PageableDefault(size = 10, page = 0)Pageable pageable) {
         return carService.findAll(pageable).getContent();
     }
 

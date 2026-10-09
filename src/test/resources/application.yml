@@ -26,3 +26,9 @@ telegram:
   chat:
     id: "-1000000000000"
 
+stripe:
+  secret-key: mock_secret_key_for_tests
+
+carsharing:
+  fine:
+    multiplier: 2.0
