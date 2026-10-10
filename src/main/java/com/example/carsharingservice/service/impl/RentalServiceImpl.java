@@ -47,7 +47,7 @@ public class RentalServiceImpl implements RentalService {
         Car car = carRepository.findById(requestDto.carId()).orElseThrow(
                 () -> new EntityNotFoundException("Can`t find car by ID: " + requestDto.carId()));
         if (car.getInventory() <= 0) {
-            throw new RuntimeException("Car is not available for rental. Inventory is 0.");
+            throw new RentalException("Car is not available for rental. Inventory is 0.");
         }
         car.setInventory(car.getInventory() - 1);
         Rental rental = rentalMapper.toModel(requestDto);
