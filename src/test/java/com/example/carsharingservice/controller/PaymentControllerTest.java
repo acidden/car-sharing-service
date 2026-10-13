@@ -3,6 +3,7 @@ package com.example.carsharingservice.controller;
 import com.example.carsharingservice.dto.PaymentRequestDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.service.PaymentService;
+import com.example.carsharingservice.service.impl.TelegramNotificationServiceImpl;
 import com.stripe.StripeClient;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -48,6 +49,9 @@ public class PaymentControllerTest {
 
     @MockitoBean
     private StripeClient stripeClient;
+
+    @MockitoBean
+    private TelegramNotificationServiceImpl telegramNotificationService;
 
     @Test
     @DisplayName("Verify getPayments() returns only current customer's payments")
