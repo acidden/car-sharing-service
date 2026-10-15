@@ -39,3 +39,8 @@ stripe:
 carsharing:
   fine:
     multiplier: 2.0
+
+springdoc:
+  swagger-ui:
+    operationSorter: alpha
+    tagsSorter: alpha

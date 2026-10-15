@@ -72,7 +72,6 @@ public class RentalCheckSchedulerImplTest {
         verify(notificationService).sendNotification(contains("customer@example.com"));
         verify(notificationService).sendNotification(contains("Tesla Model 3"));
         verify(notificationService).sendNotification(contains("Days Overdue: 2"));
-
         verify(notificationService).sendNotification(anyString());
     }
 }
